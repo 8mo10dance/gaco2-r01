@@ -1,8 +1,13 @@
 <div class="post-list" data-controller="post-list">
-  <ul class="post-list__list">
+  <ul class="post-list__list" data-post-list-target="list">
     <li>
       hoge
     </li>
   </ul>
-  <button>追加</button>
+  <button data-action="click->post-list#add">追加</button>
+  <template data-post-list-target="formTemplate">
+    <form>
+      hoge
+    </form>
+  </template>
 </div>
