@@ -18,4 +18,8 @@ export default class extends Controller {
       })
     );
   }
+
+  remove() {
+    this.element.closest("li").remove();
+  }
 }
