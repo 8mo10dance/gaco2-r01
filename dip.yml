@@ -16,3 +16,4 @@ interaction:
 
 provision:
   - dip bundle install
+  - dip rails dartsass:build
