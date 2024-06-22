@@ -1,0 +1,9 @@
+.post {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  &__content {
+    flex: 1;
+  }
+}
