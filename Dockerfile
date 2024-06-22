@@ -7,11 +7,9 @@ FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 # Rails app lives here
 WORKDIR /rails
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+ARG RAILS_ENV="production"
+ENV RAILS_ENV=${RAILS_ENV} \
+    BUNDLE_PATH="/usr/local/bundle"
 
 
 # Throw-away build stage to reduce size of final image
@@ -23,7 +21,11 @@ RUN apt-get update -qq && \
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
+RUN if [ ${RAILS_ENV} = "production" ]; then \
+      bundle install --deployment --without=development; \
+    else \
+      bundle install; \
+    fi && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
@@ -33,9 +35,10 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
+RUN if [ ${RAILS_ENV} = "prodiction" ]; then \
+      # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+      SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile; \
+    fi
 
 # Final stage for app image
 FROM base
@@ -48,11 +51,6 @@ RUN apt-get update -qq && \
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
-
-# Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
