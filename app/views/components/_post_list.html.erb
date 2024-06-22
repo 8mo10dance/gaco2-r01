@@ -1,11 +1,10 @@
 <div class="post-list" data-controller="post-list">
-  <ul class="post-list__list" data-post-list-target="list">
-    <li>
-      hoge
-    </li>
-  </ul>
+  <ul class="post-list__list" data-post-list-target="list"></ul>
   <button data-action="click->post-list#add">追加</button>
   <template data-post-list-target="formTemplate">
     <%= render partial: 'components/post_form' %>
+  </template>
+  <template data-post-list-target="postTemplate">
+    <div>hoge</div>
   </template>
 </div>

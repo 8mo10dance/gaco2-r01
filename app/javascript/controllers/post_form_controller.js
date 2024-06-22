@@ -1,7 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  connect() {
-    console.log("connected");
+  submit(event) {
+    event.preventDefault();
+    event.target.dispatchEvent(new Event("submit"));
   }
 }
