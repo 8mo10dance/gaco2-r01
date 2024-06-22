@@ -10,8 +10,17 @@ export default class extends Controller {
     this.listTarget.appendChild(li);
   }
 
-  #createFormEl() {
+  edit(event) {
+    const oldEl = event.target;
+    const newEl = this.#createFormEl({
+      values: event.detail.values,
+    });
+    oldEl.replaceWith(newEl);
+  }
+
+  #createFormEl({ values } = { values: { content: "" } }) {
     const formEl = this.formTemplateTarget.content.cloneNode(true);
+    formEl.querySelector("form").dataset["values"] = JSON.stringify(values);
     formEl.querySelector("form").addEventListener("submit", (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
@@ -25,6 +34,9 @@ export default class extends Controller {
   #createPostEl(values) {
     const postEl = this.postTemplateTarget.content.cloneNode(true);
     postEl.querySelector("div").dataset["values"] = JSON.stringify(values);
+    postEl
+      .querySelector("div")
+      .addEventListener("editPost", (event) => this.edit(event));
     return postEl;
   }
 }
