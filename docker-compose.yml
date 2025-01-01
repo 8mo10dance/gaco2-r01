@@ -1,10 +1,13 @@
 services:
-  ruby:
-    image: ruby:2.7.5
-    working_dir: /ruby
+  rails:
+    build:
+      context: .
+    image: r01:1.0.0
     volumes:
-      - .:/ruby
+      - .:/rails
       - bundle:/usr/local/bundle
+    ports:
+      - '3000:3000'
 
 volumes:
   bundle:

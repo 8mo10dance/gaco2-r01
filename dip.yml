@@ -1,6 +1,9 @@
 version: '4'
 
 interaction:
-  bash:
-    service: ruby
-    command: bash
+  bundle:
+    service: rails
+    command: bundle
+
+provision:
+  - dip bundle install
