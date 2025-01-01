@@ -1,0 +1,10 @@
+services:
+  ruby:
+    image: ruby:2.7.5
+    working_dir: /ruby
+    volumes:
+      - .:/ruby
+      - bundle:/usr/local/bundle
+
+volumes:
+  bundle:
