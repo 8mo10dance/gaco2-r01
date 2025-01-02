@@ -1,24 +1,32 @@
-# README
+## LocalStack の動かし方
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. AWS CLI をインストールする
 
-Things you may want to cover:
+2. LocalStack 用のプロファイルを作成する
+  ```bash
+  $ aws configure --profile localstack
+  AWS Access Key ID [None]: dummy
+  AWS Secret Access Key [None]: dummy
+  Default region name [None]: ap-northeast-1
+  Default output format [None]: json
+  ```
 
-* Ruby version
+3. LocalStack を立ち上げる
+  ```bash
+  $ docker compose up -d
+  ```
+  `http://localhost:4566/health` にアクセスできればよい。
 
-* System dependencies
+4. S3のバケットを作成する
+  起動時に自動で作成される。以下のコマンドでバケット一覧を確認できる。
+  ```bash
+  $ aws s3 ls --endpoint-url=http://localhost:4566 --profile localstack
+  ```
 
-* Configuration
+## LocalStack に画像をアップできたかの確認
 
-* Database creation
+次のコマンドで確認できる。
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+$ aws s3 ls --endpoint-url=http://localhost:4566 --profile localstack s3://microposts --recursive
+```

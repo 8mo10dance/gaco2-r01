@@ -10,6 +10,16 @@ services:
       - assets:/rails/app/assets/builds
     ports:
       - '3000:3000'
+  localstack:
+    image: localstack/localstack:4.0
+    ports:
+      - '4566:4566'
+    environment:
+      SERVICES: s3
+      DEBUG: 1
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - ./localstack/init:/etc/localstack/init
 
 volumes:
   bundle:
