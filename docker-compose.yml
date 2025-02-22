@@ -2,7 +2,7 @@ services:
   rails:
     build:
       context: .
-    image: r01:1.0.0
+    image: r01:1.1.0
     volumes:
       - .:/rails
       - bundle:/usr/local/bundle
