@@ -17,6 +17,10 @@ interaction:
     command: bundle exec rspec
     environment:
       RAILS_ENV: test
+  yarn:
+    service: rails
+    command: yarn
 
 provision:
   - dip bundle install
+  - dip yarn install
