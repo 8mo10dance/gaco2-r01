@@ -12,4 +12,4 @@ RUN npm i -g yarn
 RUN gem update --system 3.3.22
 
 EXPOSE 3000
-CMD bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+CMD bash -c "rm -f tmp/pids/server.pid && bin/dev"
