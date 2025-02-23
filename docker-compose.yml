@@ -6,8 +6,10 @@ services:
     volumes:
       - .:/rails
       - bundle:/usr/local/bundle
+      - node_modules:/rails/node_modules
     ports:
       - '3000:3000'
 
 volumes:
   bundle:
+  node_modules:
