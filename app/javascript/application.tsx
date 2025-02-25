@@ -10,7 +10,7 @@ const App = () => (
 
 document.addEventListener("DOMContentLoaded", () => {
   const domNode = document.getElementById("root");
-  if (domNode === undefined) return;
+  if (!domNode) return;
 
   const root = createRoot(domNode);
   root.render(<App />);
