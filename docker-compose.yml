@@ -7,9 +7,11 @@ services:
       - .:/rails
       - bundle:/usr/local/bundle
       - node_modules:/rails/node_modules
+      - assets:/rails/app/assets/builds
     ports:
       - '3000:3000'
 
 volumes:
   bundle:
   node_modules:
+  assets:
