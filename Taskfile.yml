@@ -1,0 +1,32 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    deps:
+      - bundle:install
+      - yarn:install
+    cmds:
+      - docker compose up -d
+  rspec:
+    deps:
+      - bundle:install
+      - yarn:install
+    cmds:
+      - docker compose run --rm rails bundle exec rspec
+    env:
+      RAILS_ENV: test
+  bundle:install:
+    deps:
+      - build
+    cmds:
+      - docker compose run --rm rails bundle install
+  yarn:install:
+    deps:
+      - build
+    cmds:
+      - docker compose run --rm rails yarn install
+  build:
+    cmds:
+      - docker compose build
