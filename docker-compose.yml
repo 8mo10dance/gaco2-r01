@@ -2,6 +2,10 @@ services:
   rails:
     build:
       context: .
+      cache_from:
+        - type=gha
+      cache_to:
+        - type=gha,mode=max
     image: r01:2.0.0
     volumes:
       - .:/rails
