@@ -3,12 +3,6 @@
 version: '3'
 
 tasks:
-  default:
-    deps:
-      - bundle:install
-      - yarn:install
-    cmds:
-      - docker compose up -d
   rspec:
     deps:
       - bundle:install
